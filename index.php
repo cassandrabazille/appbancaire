@@ -1,25 +1,20 @@
 <?php
 
-require_once __DIR__ .'/lib/database.php';
-require_once __DIR__ .'/Models/Client.php';
+require_once __DIR__ . '/Models/Repositories/ClientRepository.php';
 
 $clientrepo = new ClientRepository();
 
-$client = new Client();
-$client->nom = 'Nom';
-$client->prenom = 'prenom';
-$client->mail = 'mail';
-$client->telephone = 'telephone';
-$client->adresse = 'adresse';
+if (isset($_GET['action']) && $_GET['action'] == 'view' && isset($_GET['id_client'])) {
+    
+    $task = $clientrepo->getClient($_GET['id_client']);
+    require_once __DIR__ . '/views/view-task.php';
 
-// Test multi-client
-for ($i = 1; $i <= 5; $i++) {
-    $client = $clientrepo->getClient($i);
-    echo "<h2>Client $i :</h2>";
-    var_dump($client);
-    echo "<hr>";
+} else {
+    
+    $client = $clientrepo->getClients();
+    require_once __DIR__ . '/views/home.php';    
+    
 }
-
 
 
 

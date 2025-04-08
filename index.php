@@ -1,22 +1,50 @@
 <?php
+session_start();
 
-require_once __DIR__ . '/Models/Repositories/ClientRepository.php';
+// Chargement des contrôleurs
+require_once __DIR__ . '/Controllers/AuthController.php';
+require_once __DIR__ . '/Controllers/ClientController.php';
 
-$clientrepo = new ClientRepository();
+$authController = new AuthController();
+$clientController = new ClientController();
 
-if (isset($_GET['action']) && $_GET['action'] == 'view' && isset($_GET['id_client'])) {
-    
-    $task = $clientrepo->getClient($_GET['id_client']);
-    require_once __DIR__ . '/views/view-task.php';
-
-} else {
-    
-    $client = $clientrepo->getClients();
-    require_once __DIR__ . '/views/home.php';    
-    
+// Par défaut : redirige vers le login
+if (!isset($_GET['action']) && !isset($_SESSION['id_admin'])) {
+    header('Location: ?action=login');
+    exit;
 }
 
+$action = $_GET['action'] ?? 'home';
 
+switch ($action) {
+    case 'home':
+        if (!isset($_SESSION['id_admin'])) {
+            header('Location: ?action=login');
+            exit;
+        }
+        require_once __DIR__ . '/Views/home.php'; // Vue dashboard réservée aux admins
+        break;
+        
+    case 'login':
+        if (isset($_SESSION['id_admin'])) {
+            header('Location: ?action=home'); // Si déjà connecté, redirige vers le dashboard
+            exit;
+        }
+        require_once __DIR__ . '/Views/login.php'; // Affiche uniquement le formulaire
+        break;
+        
+    case 'doLogin':
+        $authController->doLogin();
+        break;
+        
+    case 'logout':
+        $authController->logout();
+        break;
+        
+    default:
+        $authController->forbidden();
+        break;
+}
 
 
 

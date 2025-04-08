@@ -72,6 +72,4 @@ public function setAdresse(string $adresse): void
     $this->adresse = htmlspecialchars($adresse);
 }
 
-
-
 }

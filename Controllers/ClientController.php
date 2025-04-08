@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../models/repositories/TaskRepository.php';
-require_once __DIR__ . '/../models/Task.php';
+require_once __DIR__ . '/../Models/Repositories/ClientRepository.php';
+require_once __DIR__ . '/../Models/Client.php';
 
 class ClientController
 {
@@ -14,7 +14,24 @@ class ClientController
 
     public function home()
     {
-        $client = $this->clientrepo->getClients();
+        $clients = $this->clientrepo->getClients();
+
+        require_once __DIR__ . '/../Views/home.php';
+    }
+
+    public function dashboard()
+    {
+        if (!isset($_SESSION['id_admin'])) {
+            header('Location: ?action=login');
+            exit;
+        }
+        $clientrepo= new ClientRepository();
+        // Utilisez $this->clientrepo au lieu d'une nouvelle instance
+        $totalClients = $this->clientrepo->countClients();
+       
+    
+        // Passez les données sous forme de tableau pour plus de clarté
+
 
         require_once __DIR__ . '/../Views/home.php';
     }
@@ -23,7 +40,7 @@ class ClientController
     {
         $client = $this->clientrepo->getClient($id);
 
-        require_once __DIR__ . '/../Views/view-task.php';
+        require_once __DIR__ . '/../Views/client-view.php';
     }
 
     public function create()

@@ -4,7 +4,6 @@ require_once __DIR__ . '/../Client.php';
 require_once __DIR__ . '/../../lib/database.php';
 class ClientRepository
 {
-
     public DatabaseConnection $connection;
 
     public function __construct()
@@ -16,18 +15,17 @@ class ClientRepository
     {
         $statement = $this->connection->getConnection()->query('SELECT * from clients');
         $result = $statement->fetchAll();
-        $tasks = [];
+        $clients = [];
         foreach ($result as $row) {
             $client = new Client();
-            $client->setId = $row['id_client'];
-            $client->setNom = $row['nom'];
-            $client->setPrenom = $row['prenom'];
-            $client->setMail = $row['mail'];
-            $client->setTelephone = $row['telephone'];
-            $client->setAdresse = $row['adresse'];
+            $client->setId($row['id_client']);       
+            $client->setNom($row['nom']);            
+            $client->setPrenom($row['prenom']);      
+            $client->setMail($row['mail']);          
+            $client->setTelephone($row['telephone']); 
+            $client->setAdresse($row['adresse']);    
 
             $clients[] = $client;
-
         }
 
         return $clients;
@@ -43,14 +41,21 @@ class ClientRepository
         }
 
         $client = new Client();
-        $client->setId = $result['id_client'];
-        $client->setNom = $result['nom'];
-        $client->setPrenom = $result['prenom'];
-        $client->setMail = $result['mail'];
-        $client->setTelephone = $result['telephone'];
-        $client->setAdresse = $result['adresse'];
+        $client->setId ($result['id_client']);
+        $client->setNom ($result['nom']);
+        $client->setPrenom ($result['prenom']);
+        $client->setMail ($result['mail']);
+        $client->setTelephone ($result['telephone']);
+        $client->setAdresse ($result['adresse']);
 
         return $client;
+    }
+    public function countClients(): int
+    {
+        $stmt = $this->connection->getConnection()->prepare("SELECT COUNT(*) AS total FROM clients");
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return (int) $result['total'];
     }
 
     public function create(Client $client): bool
@@ -71,11 +76,11 @@ class ClientRepository
     {
         $statement = $this->connection
             ->getConnection()
-            ->prepare('UPDATE clients SET :nom, :prenom, :mail, :telephone, :adresse WHERE id_client = :id_client');
+            ->prepare('UPDATE clients SET nom=:nom, :prenom=prenom, mail=:mail, telephone=:telephone, adresse=:adresse WHERE id_client = :id_client');
     
 
             return $statement->execute([
-                'id' => $client->getId(),
+                'id_client' => $client->getId(),
                 'nom' => $client->getNom(),
                 'prenom' => $client->getPrenom(),
                 'mail' => $client->getMail(),
@@ -93,4 +98,6 @@ class ClientRepository
 
         return $statement->execute();
     }
+
+
 }

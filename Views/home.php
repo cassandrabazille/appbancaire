@@ -6,19 +6,26 @@
         <!-- Contenu spécifique du dashboard ici -->
     </div>
 
-    <h2 class="mb-4">📋 Dashboard</h2>
+ 
 
 
     <body>
 
            
-    <td>Nombre total de clients enregistrés</td>
-            <td><strong><?= $totalClients ?></strong></td>
-            <td><a href="?action=clients&id? $client->getId()?> "class= "btn btn-primary btn-sm">Voir les clients</a></td>
-            </tr>          
-        <tr> 
-          
-    
+    <h2>📋 Dashboard</h2>
+<p>Nombre total de clients enregistrés : <strong><?= $totalClients ?></strong></p>
+
+<a href="?action=showList" class="btn btn-primary">Voir tous les clients</a>
+
+
+<?php if (isset($clients)) : ?>
+    <h3>Liste des clients</h3>
+    <ul>
+        <?php foreach ($clients as $client) : ?>
+            <li><?= $client->getNom() ?> <?= $client->getPrenom() ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
    
        
      

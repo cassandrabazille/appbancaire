@@ -17,30 +17,38 @@ if (!isset($_GET['action']) && !isset($_SESSION['id_admin'])) {
 $action = $_GET['action'] ?? 'home';
 
 switch ($action) {
-    case 'home':
-        if (!isset($_SESSION['id_admin'])) {
-            header('Location: ?action=login');
-            exit;
-        }
-        require_once __DIR__ . '/Views/home.php'; // Vue dashboard réservée aux admins
-        break;
-        
+
+
     case 'login':
         if (isset($_SESSION['id_admin'])) {
-            header('Location: ?action=home'); // Si déjà connecté, redirige vers le dashboard
+            header('Location: ?action=dashboard'); // ✅ redirige vers dashboard (et pas "home")
             exit;
         }
-        require_once __DIR__ . '/Views/login.php'; // Affiche uniquement le formulaire
+        require_once __DIR__ . '/Views/login.php';
         break;
-        
+    
+
     case 'doLogin':
         $authController->doLogin();
         break;
-        
+
     case 'logout':
         $authController->logout();
         break;
-        
+
+    case 'dashboard':
+        if (!isset($_SESSION['id_admin'])) {
+            header('Location: ?action=login'); // ✅ S’il est pas connecté, redirige vers login
+            exit;
+        }
+        $clientController->dashboard(); // ✅ Sinon, affiche dashboard
+        break;
+
+
+    case 'showList':
+        $clientController->showList();
+        break;
+
     default:
         $authController->forbidden();
         break;

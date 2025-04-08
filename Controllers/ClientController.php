@@ -12,7 +12,7 @@ class ClientController
         $this->clientrepo = new ClientRepository();
     }
 
-    public function home()
+    public function showList()
     {
         $clients = $this->clientrepo->getClients();
 
@@ -25,16 +25,11 @@ class ClientController
             header('Location: ?action=login');
             exit;
         }
-        $clientrepo= new ClientRepository();
-        // Utilisez $this->clientrepo au lieu d'une nouvelle instance
-        $totalClients = $this->clientrepo->countClients();
-       
     
-        // Passez les données sous forme de tableau pour plus de clarté
-
-
+        $totalClients = $this->clientrepo->countClients();
         require_once __DIR__ . '/../Views/home.php';
     }
+    
 
     public function show(int $id) 
     {

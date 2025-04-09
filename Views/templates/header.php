@@ -16,10 +16,10 @@
                         <a class="nav-link" href="?action=dashboard">🏠 Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?action=showList">Gestion des clients</a>
+                        <a class="nav-link" href="?action=client-list">Gestion des clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?action=create">Gestion des comptes</a>
+                        <a class="nav-link" href="?action=compte-list">Gestion des comptes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="?action=create">Gestion des contrats</a>

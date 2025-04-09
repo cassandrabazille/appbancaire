@@ -45,8 +45,8 @@
                 <td><?= htmlspecialchars($client->getTelephone()) ?></td>
                 <td><?= htmlspecialchars($client->getAdresse()) ?></td>
                 <td> 
-                <a href="?action=edit&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Modifier✏️</a>
-                <a onclick="return confirm('T’es sûr ?');" href="?action=delete&id_client=<?= $client->getId() ?>" class="btn btn-dark btn-sm">Supprimer ❌</a>
+                <a href="?action=client-edit&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Modifier✏️</a>
+                <a onclick="return confirm('T’es sûr ?');" href="?action=client-delete&id_client=<?= $client->getId() ?>" class="btn btn-dark btn-sm">Supprimer ❌</a>
                 <a href="?action=client-view&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Voir dossier 👀</a>
 
                 </td>

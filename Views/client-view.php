@@ -12,13 +12,13 @@
 <h2 class="mb-4">📋 Détails du client</h2>
 
 <p><strong>Id : </strong> <?= htmlspecialchars($client->getId()) ?></p>
-<p><strong>Name : </strong> <?= htmlspecialchars($client->getPrenom()) ?></p>
-<p><strong>Name : </strong> <?= htmlspecialchars($client->getNom()) ?></p>
-<p><strong>Mail : </strong> <?= htmlspecialchars ($client->getMail()) ?></p>
-<p><strong>Phone : </strong> <?= htmlspecialchars ($client->getTelephone()) ?></p>
+<p><strong>Prénom : </strong> <?= htmlspecialchars($client->getPrenom()) ?></p>
+<p><strong>Nom : </strong> <?= htmlspecialchars($client->getNom()) ?></p>
+<p><strong>E-mail : </strong> <?= htmlspecialchars ($client->getMail()) ?></p>
+<p><strong>Téléphone : </strong> <?= htmlspecialchars ($client->getTelephone()) ?></p>
 <p><strong>Adresse : </strong> <?= htmlspecialchars ($client->getAdresse()) ?></p>
-<a href="?action=edit&id_client=<?= htmlspecialchars($client->getId()) ?>" class="btn btn-warning">Modifier le client</a>
-<a href="?action=showList" class="btn btn-secondary">Retour à la liste</a>
+<a href="?action=client-edit&id_client=<?= htmlspecialchars($client->getId()) ?>" class="btn btn-warning">Modifier le client</a>
+<a href="?action=client-list" class="btn btn-secondary">Retour à la liste</a>
 
 
 

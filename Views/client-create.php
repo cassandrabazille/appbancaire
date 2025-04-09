@@ -16,31 +16,32 @@
 
 
 
-<form action="?action=store" method="POST">
+<form action="?action=client-store" method="POST">
     <div class="mb-3">
-        <label for="description" class="form-label">Nom :</label>
-        <textarea class="form-control" id="nom" name="nom" rows="3" required></textarea>
+        <label for="nom" class="form-label">Nom :</label>
+        <input type="text" class="form-control" id="nom" name="nom" required />
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Prénom :</label>
-        <textarea class="form-control" id="prenom" name="prenom" rows="3" required></textarea>
+        <label for="prenom" class="form-label">Prénom :</label>
+        <input type="text" class="form-control" id="prenom" name="prenom" required />
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Mail :</label>
-        <textarea class="form-control" id="mail" name="mail" rows="3" required></textarea>
+        <label for="mail" class="form-label">Mail :</label>
+        <input type="text" class="form-control" id="mail" name="mail" required />
+    </div>
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Téléphone :</label>
-        <textarea class="form-control" id="telephone" name="telephone" rows="3" required></textarea>
+        <label for="telephone" class="form-label">Téléphone :</label>
+        <input type="text" class="form-control" id="telephone" name="telephone" required />
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Adresse :</label>
-        <textarea class="form-control" id="adresse" name="adresse" rows="3" required></textarea>
+        <label for="adresse" class="form-label">Adresse :</label>
+        <input type="text" class="form-control" id="adresse" name="adresse" required />
     </div>
     
     <button type="submit" class="btn btn-primary">Ajouter</button>
 </form>
 
-<a href="?" class="btn btn-secondary">Retour à la liste</a>
+<a href="?action=client-list" class="btn btn-secondary">Retour à la liste</a>
 
 <?php require_once __DIR__ . '/templates/footer.php'; 

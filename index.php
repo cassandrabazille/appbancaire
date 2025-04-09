@@ -1,20 +1,21 @@
 <?php
-session_start(); // Démarre la session pour accéder aux variables de session
+session_start();
 
-// Affichage du message flash si disponible
 if (isset($_SESSION['flash_message'])) {
     echo '<div class="alert alert-success">' . htmlspecialchars($_SESSION['flash_message']) . '</div>';
-    unset($_SESSION['flash_message']); // Supprime le message de la session après affichage
+    unset($_SESSION['flash_message']);
 }
 
-// Chargement des contrôleurs
+
 require_once __DIR__ . '/Controllers/AuthController.php';
 require_once __DIR__ . '/Controllers/ClientController.php';
+require_once __DIR__ . '/Controllers/CompteController.php';
 
 $authController = new AuthController();
 $clientController = new ClientController();
+$compteController = new CompteController();
 
-// Par défaut : redirige vers le login si l'utilisateur n'est pas connecté
+
 if (!isset($_GET['action']) && !isset($_SESSION['id_admin'])) {
     header('Location: ?action=login');
     exit;
@@ -23,71 +24,119 @@ if (!isset($_GET['action']) && !isset($_SESSION['id_admin'])) {
 $action = $_GET['action'] ?? 'home';
 
 switch ($action) {
+    //General actions
+
     case 'login':
         if (isset($_SESSION['id_admin'])) {
-            header('Location: ?action=dashboard'); // Redirige vers le dashboard si déjà connecté
+            header('Location: ?action=dashboard');
             exit;
         }
         require_once __DIR__ . '/Views/login.php';
         break;
 
     case 'doLogin':
-        $authController->doLogin(); // Traite la connexion
+        $authController->doLogin();
         break;
 
     case 'logout':
-        $authController->logout(); // Déconnecte l'utilisateur
+        $authController->logout();
         break;
 
     case 'dashboard':
         if (!isset($_SESSION['id_admin'])) {
-            header('Location: ?action=login'); // Redirige vers le login si non connecté
+            header('Location: ?action=login');
             exit;
         }
-        $clientController->dashboard(); // Affiche le dashboard
+        $totalComptes = $compteController->countComptes();
+        $totalClients = $clientController->countClients();
+        require_once __DIR__ . '/Views/home.php';
         break;
 
-    case 'showList':
-        $clientController->showList(); // Affiche la liste des clients
+
+    //Client-related actions
+
+    case 'client-list':
+        $clientController->showList();
         break;
 
     case 'client-view':
-        $clientController->showDetails(); // Affiche les détails d'un client
+        $clientController->showDetails();
         break;
 
     case 'client-create':
-        $clientController->create(); // Affiche le formulaire de création de client
+        $clientController->create();
         break;
 
-    case 'store':
-        $clientController->store(); // Enregistre un nouveau client
+    case 'client-store':
+        $clientController->store();
         break;
 
-    case 'edit':
-        if (!isset($_GET['id_client']) || !is_numeric($_GET['id_client'])) {
-            header('Location: ?action=showList'); // Redirige si l'ID du client est invalide
+    case 'client-update':
+        $clientController->update();
+        break;
+
+    case 'client-edit':
+        if (isset($_GET['id_client']) && is_numeric($_GET['id_client'])) {
+            $clientController->edit((int) $_GET['id_client']);
+        } else {
+            header('Location: ?action=client-list');
             exit;
         }
-        $clientController->edit((int)$_GET['id_client']);
         break;
 
-    case 'update':
-        $clientController->update(); // Met à jour les informations d'un client
-        break;
-
-    case 'delete':
-        if (!isset($_GET['id_client']) || !is_numeric($_GET['id_client'])) {
-            header('Location: ?action=showList'); // Redirige si l'ID du client est invalide
+    case 'client-delete':
+        if (isset($_GET['id_client']) && is_numeric($_GET['id_client'])) {
+            $clientController->delete((int) $_GET['id_client']);
+        } else {
+            header('Location: ?action=client-list');
             exit;
         }
-        $clientController->delete((int)$_GET['id_client']);
+        break;
+
+
+    // Compte-related actions
+    case 'compte-list':
+        $compteController->showList();
+        break;
+
+    case 'compte-create':
+        $compteController->create();
+        break;
+
+    case 'compte-view':
+        $compteController->showDetails();
+        break;
+
+    case 'compte-store':
+        $compteController->store();
+        break;
+
+    case 'compte-update':
+        $compteController->update();
+        break;
+    case 'compte-edit':
+        if (isset($_GET['id_compte']) && is_numeric($_GET['id_compte'])) {
+            $compteController->edit((int) $_GET['id_compte']);
+        } else {
+            header('Location: ?action=compte-list');
+            exit;
+        }
+        break;
+
+    case 'compte-delete':
+        if (isset($_GET['id_compte']) && is_numeric($_GET['id_compte'])) {
+            $compteController->delete((int) $_GET['id_compte']);
+        } else {
+            header('Location: ?action=compte-list');
+            exit;
+        }
         break;
 
     default:
-        $authController->forbidden(); // Affiche une page d'erreur si l'action est inconnue
+        $authController->forbidden();
         break;
 }
-?>
+
 
 
 

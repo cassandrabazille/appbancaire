@@ -2,14 +2,18 @@
 
 require_once __DIR__ . '/../Models/Repositories/ClientRepository.php';
 require_once __DIR__ . '/../Models/Client.php';
+require_once __DIR__ . '/../Models/Repositories/CompteRepository.php';
+
 
 class ClientController
 {
     private ClientRepository $clientrepo;
+    private CompteRepository $compterepo;
 
     public function __construct()
     {
         $this->clientrepo = new ClientRepository();
+        $this->compterepo = new CompteRepository();
     }
 
     public function showList()
@@ -22,6 +26,11 @@ class ClientController
         $clients = $this->clientrepo->getClients();
 
         require_once __DIR__ . '/../Views/client-list.php';
+    }
+
+    public function countClients()
+    {
+        return $this->clientrepo->countClients(); // Appelle la méthode dans le repository
     }
 
     public function dashboard()
@@ -47,7 +56,7 @@ class ClientController
 {
     if (!isset($_GET['id_client']) || !is_numeric($_GET['id_client'])) {
         // Redirection ou message d'erreur si l'ID est invalide
-        header('Location: ?action=showList');
+        header('Location: ?action=client-list');
         exit;
     }
 
@@ -90,10 +99,10 @@ class ClientController
         // Vérifie si l'ajout a réussi et redirige en conséquence
         if ($success) {
             // Redirection vers la liste avec un paramètre success=1 pour afficher un message de confirmation
-            header('Location: ?action=showList&add_success=1');
+            header('Location: ?action=client-list&add_success=1');
         } else {
             // En cas d'échec, on peut rediriger avec un message d'erreur
-            header('Location: ?action=showList&add_error=1');
+            header('Location: ?action=client-list&add_error=1');
         }
         exit; // Important : termine l'exécution du script après la redirection
     }
@@ -116,18 +125,30 @@ class ClientController
         $client->setAdresse($_POST['adresse']);
         $this->clientrepo->update($client);
 
-        header('Location: ?action=showList&update_success=1');
+        header('Location: ?action=client-list&update_success=1');
         exit;
     }
 
+  
     public function delete(int $id)
     {
+        // Vérifier si le client a des comptes associés
+        $comptes = $this->compterepo->findComptesByClientId($id); // Récupérer les comptes associés au client
+        if (!empty($comptes)) {
+            // Si le client a des comptes associés, on ne peut pas le supprimer
+            $_SESSION['flash_message'] = "Le client ne peut pas être supprimé car il possède des comptes.";
+            header('Location: ?action=client-list');
+            exit;
+        }
+    
+        // Si aucun compte n'est associé, procéder à la suppression du client
         $this->clientrepo->delete($id);
-
-        header('Location: ?action=showList&delete_success=1');
+    
+        // Redirection avec un message de succès
+        $_SESSION['flash_message'] = "Client supprimé avec succès.";
+        header('Location: ?action=client-list');
         exit;
     }
-
 
     public function forbidden()
     {

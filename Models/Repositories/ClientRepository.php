@@ -76,7 +76,7 @@ class ClientRepository
     {
         $statement = $this->connection
             ->getConnection()
-            ->prepare('UPDATE clients SET nom=:nom, :prenom=prenom, mail=:mail, telephone=:telephone, adresse=:adresse WHERE id_client = :id_client');
+            ->prepare('UPDATE clients SET nom=:nom, prenom=:prenom, mail=:mail, telephone=:telephone, adresse=:adresse WHERE id_client = :id_client');
     
 
             return $statement->execute([

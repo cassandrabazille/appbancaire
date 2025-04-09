@@ -1,11 +1,27 @@
-<?php require_once __DIR__ . '/templates/header.php'; 
+<?php require_once __DIR__ . '/templates/header.php'; ?>
 
-// Affiche un message d'erreur de connexion si existant
-if (isset($_SESSION['login_error'])) {
-    echo '<div class="error-message">' . $_SESSION['login_error'] . '</div>';
-    unset($_SESSION['login_error']); // On enlève le message de session après l'avoir affiché
-}
-?>
+<?php if (isset($_SESSION['flash_message'])): ?>
+    <div class="alert alert-success">
+        <?php echo $_SESSION['flash_message']; ?>
+    </div>
+    <?php unset($_SESSION['flash_message']); ?>  <!-- On nettoie la session ici après affichage -->
+<?php endif; ?>
+
+
+
+<?php if (isset($_SESSION['login_error'])): ?>
+    <div class="alert alert-danger">
+        <?php echo $_SESSION['login_error']; ?>
+    </div>
+    <?php unset($_SESSION['login_error']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-warning">
+        <?php echo $_SESSION['error']; ?>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
 
 <form action="?action=doLogin" method="POST">
     <div class="form-group">

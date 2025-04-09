@@ -1,40 +1,60 @@
 <?php require_once __DIR__ . '/templates/header.php'; ?>
-        
-<div class="container mt-5">
-        <h2 class="mb-4">📋 Liste des clients</h2>
-        <table class="table table-striped table-bordered">
-    <thead class="table-dark">
+
+
+<?php if (isset($_GET['login_success']) && $_GET['login_success'] == 1): ?>
+    <div class="alert alert-success">Connexion réussie !</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['add_success']) && $_GET['add_success'] == 1): ?>
+    <div class="alert alert-success">Client ajouté avec succès !</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['update_success']) && $_GET['update_success'] == 1): ?>
+    <div class="alert alert-success">Dossier client modifié avec succès !</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['delete_success']) && $_GET['delete_success'] == 1): ?>
+    <div class="alert alert-success">Client supprimé avec succès !</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['add_error']) && $_GET['add_error'] == 1): ?>
+    <div class="alert alert-danger">Une erreur s'est produite lors de l'ajout du client.</div>
+<?php endif; ?>
+
+
+<a class="nav-link" href="?action=client-create">⊕ Créer un nouveau client</a>
+
+<h2>👥 Liste des clients</h2>
+
+<table class="table table-striped">
+    <thead>
         <tr>
-            <th>ID</th>
-            <th>Prénom</th>
+            <th>Prenom</th>
             <th>Nom</th>
+            <th>E-mail</th>
             <th>Téléphone</th>
-            <th>Mail</th>
             <th>Adresse</th>
         </tr>
     </thead>
     <tbody>
-        <?php 
-        if (!empty($clients)): 
-            foreach($clients as $client): 
-        ?>
+        <?php foreach($clients as $client): ?>
             <tr>
-                <td><?= htmlspecialchars($client->getId()); ?></td>
-                <td><a href="?action=view&id=<?= $client->getId(); ?>"><?= htmlspecialchars($client->getName()); ?></a></td>
-                <td>
-                    <a href="?action=view&id=<?= $client->getId() ?>" class="btn btn-primary btn-sm">👀</a>
-                    <a href="?action=edit&id=<?= $client->getId() ?>" class="btn btn-warning btn-sm">✏️</a>
-                    <a onclick="return confirm('T’es sûr ?');" href="?action=delete&id=<?= $client->getId() ?>" class="btn btn-dark btn-sm">❌</a>
+                <td><?= htmlspecialchars($client->getPrenom()) ?></td>
+                <td><?= htmlspecialchars($client->getNom()) ?></td>
+                <td><?= htmlspecialchars($client->getMail()) ?></td>
+                <td><?= htmlspecialchars($client->getTelephone()) ?></td>
+                <td><?= htmlspecialchars($client->getAdresse()) ?></td>
+                <td> 
+                <a href="?action=edit&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Modifier✏️</a>
+                <a onclick="return confirm('T’es sûr ?');" href="?action=delete&id_client=<?= $client->getId() ?>" class="btn btn-dark btn-sm">Supprimer ❌</a>
+                <a href="?action=client-view&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Voir dossier 👀</a>
+
                 </td>
             </tr>
-        <?php endforeach; else: ?>
-            <tr><td colspan="4">Aucun client disponible.</td></tr>
-        <?php endif; ?>
+        <?php endforeach; ?>
     </tbody>
 </table>
-    </div>
-</body>
-</html>
 
+<a href="index.php?action=dashboard" class="btn btn-secondary">⬅️ Retour à l’accueil</a>
 
-<?php require_once __DIR__ . '/templates/footer.php';
+<?php require_once __DIR__ . '/templates/footer.php'; ?>

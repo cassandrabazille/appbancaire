@@ -15,7 +15,6 @@ class AuthController
     {
         require __DIR__ . '/../views/login.php';
     }
-
     public function doLogin()
     {
         // Vérifier si les champs sont remplis
@@ -30,16 +29,16 @@ class AuthController
             if ($admin && password_verify($mdp, $admin->getMdp())) {
                 // Connexion réussie, on enregistre l'ID de l'administrateur en session
                 $_SESSION['id_admin'] = $admin->getId();
-                $_SESSION['flash_message'] = "Connexion réussie !";
+                $_SESSION['flash_message'] = "Connexion réussie !"; // Message de succès
     
-                // Redirection vers le dashboard (ou page d'accueil si tu préfères)
+                // Redirection vers le dashboard
                 header('Location: ?action=dashboard');
                 exit;
             }
     
             // Si les identifiants sont incorrects
             $_SESSION['login_error'] = "Identifiants incorrects";
-            header('Location: ?action=login'); // Reste sur la page de login
+            header('Location: ?action=login');
             exit;
         }
     
@@ -49,14 +48,24 @@ class AuthController
         exit;
     }
     
-
+    
+    
 
     public function logout()
     {
-        unset($_SESSION['id_admin']);
-        header('Location: ?');
+        session_start(); // Démarre une nouvelle session avant de détruire l'ancienne
+        session_destroy(); // Détruit la session active
+        session_start(); // Redémarre la session pour réinitialiser les variables
+    
+        // Assurez-vous de vider tout message flash pour qu'il n'apparaisse plus
+        unset($_SESSION['flash_message']);
+        unset($_SESSION['login_error']);
+        unset($_SESSION['error']);
+        
+        header('Location: ?action=login'); // Redirection vers la page de login
         exit;
     }
+    
 
     public function forbidden()
     {

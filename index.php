@@ -1,4 +1,7 @@
+<!-- HEADER -->
 <?php
+
+//MESSAGE DE DEBUT DE SESSION
 session_start();
 
 if (isset($_SESSION['flash_message'])) {
@@ -6,21 +9,23 @@ if (isset($_SESSION['flash_message'])) {
     unset($_SESSION['flash_message']);
 }
 
-
+//LIENS DE REDIRECTION VERS LES FICHIERS CONTROLLERS ET INSTANCIATION
 require_once __DIR__ . '/Controllers/AuthController.php';
 require_once __DIR__ . '/Controllers/ClientController.php';
 require_once __DIR__ . '/Controllers/CompteController.php';
+require_once __DIR__ . '/Controllers/ContratController.php';
 
 $authController = new AuthController();
 $clientController = new ClientController();
 $compteController = new CompteController();
+$contratController = new ContratController();
 
-
+// Si l'utilisateur n'est pas connecté (!isset($_SESSION['id_admin'])) et n'a pas spécifié d'action dans l'URL, il est redirigé vers la page de connexion.
 if (!isset($_GET['action']) && !isset($_SESSION['id_admin'])) {
     header('Location: ?action=login');
     exit;
 }
-
+//Si aucune action n'est spécifiée dans l'URL, l'action par défaut sera 'home'.
 $action = $_GET['action'] ?? 'home';
 
 switch ($action) {
@@ -49,6 +54,7 @@ switch ($action) {
         }
         $totalComptes = $compteController->countComptes();
         $totalClients = $clientController->countClients();
+        $totalContrats = $contratController->countContrats();
         require_once __DIR__ . '/Views/home.php';
         break;
 
@@ -131,6 +137,49 @@ switch ($action) {
             exit;
         }
         break;
+
+          // Contrat-related actions
+    case 'contrat-list':
+        $contratController->showList();
+        break;
+
+    case 'contrat-create':
+        $contratController->create();
+        break;
+
+        case 'contrat-view':
+            if (isset($_GET['id_contrat']) && is_numeric($_GET['id_contrat'])) {
+                $contratController->show((int)$_GET['id_contrat']);
+            } else {
+                header('Location: ?action=contrat-list');
+                exit;
+            }
+            break;
+
+    case 'contrat-store':
+        $contratController->store();
+        break;
+
+    case 'contrat-update':
+        $contratController->update();
+        break;
+    case 'contrat-edit':
+        if (isset($_GET['id_contrat']) && is_numeric($_GET['id_contrat'])) {
+            $contratController->edit((int) $_GET['id_contrat']);
+        } else {
+            header('Location: ?action=contrat-list');
+            exit;
+        }
+        break;
+
+        case 'contrat-delete':
+            if (isset($_GET['id_contrat']) && is_numeric($_GET['id_contrat'])) {
+                $contratController->delete((int)$_GET['id_contrat']);
+            } else {
+                header('Location: ?action=contrat-list');
+                exit;
+            }
+            break;
 
     default:
         $authController->forbidden();

@@ -22,7 +22,7 @@
                         <a class="nav-link" href="?action=compte-list">Gestion des comptes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?action=create">Gestion des contrats</a>
+                        <a class="nav-link" href="?action=contrat-list">Gestion des contrats</a>
                     </li>
                     <?php if (isset($_SESSION['id_admin'])): ?>
                     <li class="nav-item">

@@ -1,38 +1,47 @@
+<!-- HEADER -->
 <?php require_once __DIR__ . '/templates/header.php'; ?>
 
-
+<!-- MESSAGES DE SUCCES ET ECHEC -->
 <?php if (isset($_GET['login_success']) && $_GET['login_success'] == 1): ?>
-    <div class="alert alert-success">Connexion réussie !</div>
+    <div class="alert alert-success"><?= htmlspecialchars('Connexion réussie !') ?></div>
 <?php endif; ?>
 
 <?php if (isset($_GET['add_success']) && $_GET['add_success'] == 1): ?>
-    <div class="alert alert-success">Compte ajouté avec succès !</div>
+    <div class="alert alert-success"><?= htmlspecialchars('Compte ajouté avec succès !') ?></div>
 <?php endif; ?>
 
 <?php if (isset($_GET['update_success']) && $_GET['update_success'] == 1): ?>
-    <div class="alert alert-success">Dossier compte modifié avec succès !</div>
+    <div class="alert alert-success"><?= htmlspecialchars('Dossier compte modifié avec succès !') ?></div>
 <?php endif; ?>
 
 <?php if (isset($_GET['delete_success']) && $_GET['delete_success'] == 1): ?>
-    <div class="alert alert-success">Compte supprimé avec succès !</div>
+    <div class="alert alert-success"><?= htmlspecialchars('Compte supprimé avec succès !') ?></div>
 <?php endif; ?>
 
 <?php if (isset($_GET['add_error']) && $_GET['add_error'] == 1): ?>
-    <div class="alert alert-danger">Une erreur s'est produite lors de l'ajout du compte.</div>
+    <div class="alert alert-danger"><?= htmlspecialchars('Une erreur s\'est produite lors de l\'ajout du compte.') ?></div>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['flash_message'])): ?>
+    <div class="alert alert-danger">
+        <?= htmlspecialchars($_SESSION['flash_message']) ?>
+    </div>
+    <?php unset($_SESSION['flash_message']); ?>
 <?php endif; ?>
 
 
-<a class="nav-link" href="?action=compte-create">⊕ Créer un nouveau compte</a>
+<!-- LISTE DES COMPTES -->
+<a class="nav-link" href="?action=compte-create"><?= htmlspecialchars('⊕ Créer un nouveau compte') ?></a>
 
-<h2>👥 Liste des comptes</h2>
+<h2><?= htmlspecialchars('👥 Liste des comptes') ?></h2>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Rib</th>
-            <th>Type de compte</th>
-            <th>Solde/th>
-            <th>Id du client</th>
+            <th><?= htmlspecialchars('Rib') ?></th>
+            <th><?= htmlspecialchars('Type de compte') ?></th>
+            <th><?= htmlspecialchars('Solde') ?></th>
+            <th><?= htmlspecialchars('Nom client') ?></th>
         </tr>
     </thead>
     <tbody>
@@ -41,18 +50,18 @@
                 <td><?= htmlspecialchars($compte->getRib()) ?></td>
                 <td><?= htmlspecialchars($compte->getTypeCompte()) ?></td>
                 <td><?= htmlspecialchars($compte->getSolde()) ?></td>
-                <td><?= htmlspecialchars($compte->getClientId()) ?></td>
-                <td> 
-                <a href="?action=compte-edit&id_compte=<?= $compte->getId() ?>" class="btn btn-warning btn-sm">Modifier✏️</a>
-                <a onclick="return confirm('T’es sûr ?');" href="?action=compte-delete&id_compte=<?= $compte->getId() ?>" class="btn btn-dark btn-sm">Supprimer ❌</a>
-                <a href="?action=compte-view&id_compte=<?= $compte->getId() ?>" class="btn btn-warning btn-sm">Voir dossier 👀</a>
-
+                <td><?= htmlspecialchars($compte->getClient()->getNom()) ?></td>
+                <td>
+                    <a href="?action=compte-edit&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-warning btn-sm"><?= htmlspecialchars('Modifier✏️') ?></a>
+                    <a onclick="return confirm('T’es sûr ?');" href="?action=compte-delete&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-dark btn-sm"><?= htmlspecialchars('Supprimer ❌') ?></a>
+                    <a href="?action=compte-view&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-warning btn-sm"><?= htmlspecialchars('Voir dossier 👀') ?></a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 
-<a href="index.php?action=dashboard" class="btn btn-secondary">⬅️ Retour à l’accueil</a>
+<a href="index.php?action=dashboard" class="btn btn-secondary"><?= htmlspecialchars('⬅️ Retour à l’accueil') ?></a>
 
+<!-- FOOTER -->
 <?php require_once __DIR__ . '/templates/footer.php'; ?>

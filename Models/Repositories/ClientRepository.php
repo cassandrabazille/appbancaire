@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../Client.php';
 require_once __DIR__ . '/../../lib/database.php';
+
+//CLASSE GERANT L'ACCES AUX DONNEES LIEES AUX CLIENTS
 class ClientRepository
 {
     public DatabaseConnection $connection;
@@ -11,6 +13,34 @@ class ClientRepository
         $this->connection = new DatabaseConnection();
     }
 
+    public function countClients(): int
+    {
+        $stmt = $this->connection->getConnection()->prepare("SELECT COUNT(*) AS total FROM clients");
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return (int) $result['total'];
+    }
+
+    //CRUD
+
+    //CREATE
+    public function create(Client $client): bool
+    {
+        $statement = $this->connection
+            ->getConnection()
+            ->prepare('INSERT INTO clients (nom, prenom, mail, telephone, adresse) VALUES (:nom, :prenom, :mail, :telephone, :adresse);');
+
+        // On utilise htmlspecialchars pour sécuriser les données avant l'insertion dans la base de données
+        return $statement->execute([
+            'nom' => htmlspecialchars($client->getNom()), 
+            'prenom' => htmlspecialchars($client->getPrenom()), 
+            'mail' => htmlspecialchars($client->getMail()), 
+            'telephone' => htmlspecialchars($client->getTelephone()), 
+            'adresse' => htmlspecialchars($client->getAdresse()) 
+        ]);
+    }
+
+    //READ
     public function getClients(): array
     {
         $statement = $this->connection->getConnection()->query('SELECT * from clients');
@@ -18,18 +48,19 @@ class ClientRepository
         $clients = [];
         foreach ($result as $row) {
             $client = new Client();
-            $client->setId($row['id_client']);       
-            $client->setNom($row['nom']);            
-            $client->setPrenom($row['prenom']);      
-            $client->setMail($row['mail']);          
-            $client->setTelephone($row['telephone']); 
-            $client->setAdresse($row['adresse']);    
+            $client->setId($row['id_client']);
+            $client->setNom(htmlspecialchars($row['nom'])); 
+            $client->setPrenom(htmlspecialchars($row['prenom'])); 
+            $client->setMail(htmlspecialchars($row['mail']));
+            $client->setTelephone(htmlspecialchars($row['telephone'])); 
+            $client->setAdresse(htmlspecialchars($row['adresse'])); 
 
             $clients[] = $client;
         }
 
         return $clients;
     }
+
     public function getClient(int $id): ?Client
     {
         $statement = $this->connection->getConnection()->prepare("SELECT * FROM clients WHERE id_client=:id_client");
@@ -41,54 +72,35 @@ class ClientRepository
         }
 
         $client = new Client();
-        $client->setId ($result['id_client']);
-        $client->setNom ($result['nom']);
-        $client->setPrenom ($result['prenom']);
-        $client->setMail ($result['mail']);
-        $client->setTelephone ($result['telephone']);
-        $client->setAdresse ($result['adresse']);
+        $client->setId($result['id_client']);
+        $client->setNom(htmlspecialchars($result['nom']));
+        $client->setPrenom(htmlspecialchars($result['prenom'])); 
+        $client->setMail(htmlspecialchars($result['mail'])); 
+        $client->setTelephone(htmlspecialchars($result['telephone'])); 
+        $client->setAdresse(htmlspecialchars($result['adresse'])); 
 
         return $client;
     }
-    public function countClients(): int
-    {
-        $stmt = $this->connection->getConnection()->prepare("SELECT COUNT(*) AS total FROM clients");
-        $stmt->execute();
-        $result = $stmt->fetch();
-        return (int) $result['total'];
-    }
 
-    public function create(Client $client): bool
-    {
-        $statement = $this->connection
-            ->getConnection()
-            ->prepare('INSERT INTO clients (nom, prenom, mail, telephone, adresse) VALUES (:nom, :prenom, :mail, :telephone, :adresse);');
-       
-            return $statement->execute([
-                'nom' => $client->getNom(),
-                'prenom' => $client->getPrenom(),
-                'mail' => $client->getMail(),
-                'telephone' => $client->getTelephone(),
-                'adresse' => $client->getAdresse(),
-            ]);
-    }
+    //EDIT
     public function update(Client $client): bool
     {
         $statement = $this->connection
             ->getConnection()
             ->prepare('UPDATE clients SET nom=:nom, prenom=:prenom, mail=:mail, telephone=:telephone, adresse=:adresse WHERE id_client = :id_client');
-    
 
-            return $statement->execute([
-                'id_client' => $client->getId(),
-                'nom' => $client->getNom(),
-                'prenom' => $client->getPrenom(),
-                'mail' => $client->getMail(),
-                'telephone' => $client->getTelephone(),
-                'adresse' => $client->getAdresse(),
-            ]);
+        // On utilise htmlspecialchars pour sécuriser les données avant la mise à jour dans la base de données
+        return $statement->execute([
+            'id_client' => $client->getId(),
+            'nom' => htmlspecialchars($client->getNom()), 
+            'prenom' => htmlspecialchars($client->getPrenom()), 
+            'mail' => htmlspecialchars($client->getMail()),
+            'telephone' => htmlspecialchars($client->getTelephone()), 
+            'adresse' => htmlspecialchars($client->getAdresse()) 
+        ]);
     }
 
+    //DELETE
     public function delete(int $id)
     {
         $statement = $this->connection
@@ -98,6 +110,4 @@ class ClientRepository
 
         return $statement->execute();
     }
-
-
 }

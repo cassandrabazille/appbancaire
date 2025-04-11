@@ -1,10 +1,13 @@
+<!-- HEADER -->
 <?php require_once __DIR__ . '/templates/header.php'; ?> 
 
+<!-- MESSAGES DE SUCCES  -->
+
 <?php if (isset($_GET['update_success']) && $_GET['update_success'] == 1): ?>
-    <div class="alert alert-success">Dossier client modifié avec succès !</div>
+    <div class="alert alert-success"><?= htmlspecialchars('Dossier client modifié avec succès !') ?></div>
 <?php endif; ?>
 
-
+<!-- FORMULAIRE DE MODIFICATION DU DOSSIER CLIENT -->
 <h2 class="mb-4">Modification du dossier client</h2>
 
 <form action="?action=client-update" method="POST">
@@ -32,13 +35,13 @@
     
     <div class="mb-3">
         <label for="adresse" class="form-label">Adresse :</label>
-        <textarea class="form-control" id="adresse" name="adresse" rows="3" required><?= htmlspecialchars($client->getAdresse()) ?></textarea>
+        <textarea class="form-control" id="adresse" name="adresse" rows="3"><?= htmlspecialchars($client->getAdresse()) ?></textarea>
     </div>
     
     <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
 </form>
 
-
 <a href="?action=client-list" class="btn btn-secondary">Retour à la liste</a>
 
+<!-- FOOTER -->
 <?php require_once __DIR__ . '/templates/footer.php'; ?>

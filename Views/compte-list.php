@@ -31,7 +31,11 @@
 
 
 <!-- LISTE DES COMPTES -->
-<a class="nav-link" href="?action=compte-create"><?= htmlspecialchars('⊕ Créer un nouveau compte') ?></a>
+<div class="d-flex justify-content-end mb-3">
+<button type="button" class="btn btn-dark mb-3"><a class="nav-link" href="?action=compte-create"><?= htmlspecialchars('⊕ Créer un nouveau compte') ?></a></button>
+</div>
+
+
 
 <h2><?= htmlspecialchars('👥 Liste des comptes') ?></h2>
 
@@ -52,9 +56,9 @@
                 <td><?= htmlspecialchars($compte->getSolde()) ?></td>
                 <td><?= htmlspecialchars($compte->getClient()->getNom()) ?></td>
                 <td>
-                    <a href="?action=compte-edit&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-warning btn-sm"><?= htmlspecialchars('Modifier✏️') ?></a>
-                    <a onclick="return confirm('T’es sûr ?');" href="?action=compte-delete&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-dark btn-sm"><?= htmlspecialchars('Supprimer ❌') ?></a>
-                    <a href="?action=compte-view&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-warning btn-sm"><?= htmlspecialchars('Voir dossier 👀') ?></a>
+                    <a href="?action=compte-edit&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-secondary btn-sm"><?= htmlspecialchars('Modifier✏️') ?></a>
+                    <a onclick="return confirm('T’es sûr ?');" href="?action=compte-delete&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-danger btn-sm"><?= htmlspecialchars('Supprimer ❌') ?></a>
+                    <a href="?action=compte-view&id_compte=<?= htmlspecialchars($compte->getId()) ?>" class="btn btn-dark btn-sm"><?= htmlspecialchars('Voir dossier 👀') ?></a>
                 </td>
             </tr>
         <?php endforeach; ?>

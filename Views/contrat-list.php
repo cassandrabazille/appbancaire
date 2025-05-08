@@ -23,7 +23,9 @@
 <?php endif; ?>
 
 <!-- LISTE DES CONTRATS -->
-<a class="nav-link" href="?action=contrat-create"><?= htmlspecialchars('⊕ Créer un nouveau contrat') ?></a>
+<div class="d-flex justify-content-end mb-3">
+<button type="button" class="btn btn-dark mb-3"><a class="nav-link" href="?action=contrat-create"><?= htmlspecialchars('⊕ Créer un nouveau contrat') ?></a></button>
+</div>
 
 <h2><?= htmlspecialchars('👥 Liste des contrats') ?></h2>
 
@@ -45,9 +47,9 @@
                 <td><?= htmlspecialchars($contrat->getDuree()) ?></td>
                 <td><?= htmlspecialchars($contrat->getClient()->getNom()) ?></td>
                 <td>
-                    <a href="?action=contrat-edit&id_contrat=<?= htmlspecialchars($contrat->getId()) ?>" class="btn btn-warning btn-sm"><?= htmlspecialchars('Modifier✏️') ?></a>
-                    <a onclick="return confirm('T’es sûr ?');" href="?action=contrat-delete&id_contrat=<?= htmlspecialchars($contrat->getId()) ?>" class="btn btn-dark btn-sm"><?= htmlspecialchars('Supprimer ❌') ?></a>
-                    <a href="?action=contrat-view&id_contrat=<?= htmlspecialchars($contrat->getId()) ?>" class="btn btn-warning btn-sm"><?= htmlspecialchars('Voir dossier 👀') ?></a>
+                    <a href="?action=contrat-edit&id_contrat=<?= htmlspecialchars($contrat->getId()) ?>" class="btn btn-secondary btn-sm"><?= htmlspecialchars('Modifier✏️') ?></a>
+                    <a onclick="return confirm('T’es sûr ?');" href="?action=contrat-delete&id_contrat=<?= htmlspecialchars($contrat->getId()) ?>" class="btn btn-danger btn-sm"><?= htmlspecialchars('Supprimer ❌') ?></a>
+                    <a href="?action=contrat-view&id_contrat=<?= htmlspecialchars($contrat->getId()) ?>" class="btn btn-dark btn-sm"><?= htmlspecialchars('Voir dossier 👀') ?></a>
                 </td>
             </tr>
         <?php endforeach; ?>

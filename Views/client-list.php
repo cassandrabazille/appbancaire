@@ -32,8 +32,9 @@
 
 
 <!-- LISTE DES CLIENTS -->
-
-<a class="nav-link" href="?action=client-create">⊕ Créer un nouveau client</a>
+<div class="d-flex justify-content-end mb-3">
+<button type="button" class="btn btn-dark mb-3"><a class="nav-link" href="?action=client-create">⊕ Créer un nouveau client</a></button>
+</div>
 
 <h2>👥 Liste des clients</h2>
 
@@ -56,9 +57,9 @@
                 <td><?= htmlspecialchars($client->getTelephone()) ?></td>
                 <td><?= htmlspecialchars($client->getAdresse()) ?></td>
                 <td> 
-                <a href="?action=client-edit&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Modifier✏️</a>
-                <a onclick="return confirm('T’es sûr ?');" href="?action=client-delete&id_client=<?= $client->getId() ?>" class="btn btn-dark btn-sm">Supprimer ❌</a>
-                <a href="?action=client-view&id_client=<?= $client->getId() ?>" class="btn btn-warning btn-sm">Voir dossier 👀</a>
+                <a href="?action=client-edit&id_client=<?= $client->getId() ?>" class="btn btn-secondary btn-sm">Modifier✏️</a>
+                <a onclick="return confirm('T’es sûr ?');" href="?action=client-delete&id_client=<?= $client->getId() ?>" class="btn btn-danger btn-sm">Supprimer ❌</a>
+                <a href="?action=client-view&id_client=<?= $client->getId() ?>" class="btn btn-dark btn-sm">Voir dossier 👀</a>
 
                 </td>
             </tr>

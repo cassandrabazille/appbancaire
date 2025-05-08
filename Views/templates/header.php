@@ -9,7 +9,11 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="?action=dashboard"> Application bancaire</a>
+        <a class="navbar-brand d-flex align-items-center" href="?action=dashboard">
+  <img src="Views/Images/monaco-white.svg" alt="Logo" class="me-2" style="height: 30px;">
+  Application bancaire
+</a>
+
             <div id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

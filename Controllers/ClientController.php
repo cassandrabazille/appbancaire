@@ -170,19 +170,19 @@ class ClientController
     //DELETE
     public function delete(int $id)
     {
-        $comptes = $this->compterepo->findComptesByClientId($id);
-        if (!empty($comptes)) {
-            $_SESSION['flash'] = [
-                'type' => 'danger',
-                'message' => "Le client ne peut pas être supprimé car il possède des comptes."
-            ];            
-            header('Location: ?action=client-list');
-            exit;
-        }
+        // $comptes = $this->compterepo->findComptesByClientId($id);
+        // if (!empty($comptes)) {
+        //     $_SESSION['flash'] = [
+        //         'type' => 'danger',
+        //         'message' => "Le client ne peut pas être supprimé car il possède des comptes."
+        //     ];            
+        //     header('Location: ?action=client-list');
+        //     exit;
+        // }
 
         $this->clientrepo->delete($id);
 
-        $_SESSION['flash_message'] = "Client supprimé avec succès.";
+        $_SESSION['flash_message'] = "Client supprimé avec succès, ainsi que ses comptes et contrats associés.";
         header('Location: ?action=client-list');
         exit;
     }

@@ -27,7 +27,7 @@
 <button type="button" class="btn btn-dark mb-3"><a class="nav-link" href="?action=contrat-create"><?= htmlspecialchars('⊕ Créer un nouveau contrat') ?></a></button>
 </div>
 
-<h2><?= htmlspecialchars('👥 Liste des contrats') ?></h2>
+<h2><?= htmlspecialchars('📝 Liste des contrats') ?></h2>
 
 <?php if (!empty($contrats)): ?>
     <table class="table table-striped">

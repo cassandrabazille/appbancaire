@@ -37,7 +37,7 @@
 
 
 
-<h2><?= htmlspecialchars('👥 Liste des comptes') ?></h2>
+<h2><?= htmlspecialchars('💰  Liste des comptes') ?></h2>
 
 <table class="table table-striped">
     <thead>

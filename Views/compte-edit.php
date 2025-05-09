@@ -13,11 +13,19 @@
     <input type="hidden" name="id_compte" value="<?= htmlspecialchars($compte->getId()) ?>">
 
     <div class="mb-3">
-        <label for="type_compte" class="form-label">Type de compte :</label>
-        <input type="text" class="form-control" id="type_compte" name="type_compte" value="<?= htmlspecialchars($compte->getTypeCompte()) ?>" required />
-    </div>
+    <label for="type_compte" class="form-label">Type de compte :</label>
+    <select name="type_compte" id="type_compte" class="form-select" required>
+        <?php foreach ($typesCompteDisponibles as $type): ?>
+            <option value="<?= htmlspecialchars($type) ?>" 
+                <?= $compte->getTypeCompte() === $type ? 'selected' : '' ?>>
+                <?= htmlspecialchars($type) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
     <div class="mb-3">
-        <label for="solde" class="form-label">Solde :</label>
+        <label for="solde" class="form-label">Solde (en euros) :</label>
         <input type="number" class="form-control" id="solde" name="solde" value="<?= htmlspecialchars($compte->getSolde()) ?>" required />
     </div>
     

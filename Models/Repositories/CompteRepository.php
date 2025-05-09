@@ -121,6 +121,9 @@ class CompteRepository
         return (int) $result['total_comptes'];
     }
 
-
+    public static function getTypesCompteDisponibles(): array
+    {
+        return ['Courant', 'Épargne']; // Liste des types de comptes
+    }
 
 }

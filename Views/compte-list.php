@@ -35,8 +35,6 @@
 <button type="button" class="btn btn-dark mb-3"><a class="nav-link" href="?action=compte-create"><?= htmlspecialchars('⊕ Créer un nouveau compte') ?></a></button>
 </div>
 
-
-
 <h2><?= htmlspecialchars('💰  Liste des comptes') ?></h2>
 
 <table class="table table-striped">
@@ -50,6 +48,7 @@
     </thead>
     <tbody>
         <?php foreach($comptes as $compte): ?>
+        
             <tr>
                 <td><?= htmlspecialchars($compte->getRib()) ?></td>
                 <td><?= htmlspecialchars($compte->getTypeCompte()) ?></td>

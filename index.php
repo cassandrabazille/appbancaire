@@ -129,6 +129,16 @@ switch ($action) {
         }
         break;
 
+        case 'compte-update-type':
+            if (isset($_GET['id_compte']) && is_numeric($_GET['id_compte'])) {
+                $compteController->updateTypeCompte(); // Appel sans paramètre, tout est dans $_POST
+            } else {
+                header('Location: ?action=compte-list');
+                exit;
+            }
+            break;
+        
+
     case 'compte-delete':
         if (isset($_GET['id_compte']) && is_numeric($_GET['id_compte'])) {
             $compteController->delete((int) $_GET['id_compte']);
@@ -138,6 +148,7 @@ switch ($action) {
         }
         break;
 
+    
           // Contrat-related actions
     case 'contrat-list':
         $contratController->showList();

@@ -21,6 +21,7 @@ class ContratController
     //CREATE
     public function create()
     {
+        $typesContratDisponibles = ContratRepository::getTypesContratDisponibles();
         require_once __DIR__ . '/../Views/contrat-create.php';
     }
 

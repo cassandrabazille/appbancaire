@@ -112,6 +112,16 @@ class ContratRepository
         return $statement->execute();
     }
 
+    public static function getTypesContratDisponibles(): array
+{
+    return [
+        'Assurance vie',
+        'Assurance credit immobilier',
+        'Credit consommation',
+        'CEL'
+    ];
+}
+
 
     // public function findContratsByClientId($id)
     // {

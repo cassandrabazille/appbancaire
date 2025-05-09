@@ -22,6 +22,8 @@ class CompteController
     //CREATE
     public function create()
     {
+          // Récupère la liste des types de comptes à afficher dans la vue
+    $typesCompteDisponibles = $this->compterepo->getTypesCompteDisponibles();
         require_once __DIR__ . '/../Views/compte-create.php';
     }
 
@@ -104,6 +106,7 @@ class CompteController
     public function edit(int $id)
     {
         $compte = $this->compterepo->getCompte($id);
+        $typesCompteDisponibles = $this->compterepo->getTypesCompteDisponibles();
         require_once __DIR__ . '/../Views/compte-edit.php';
     }
 
@@ -125,6 +128,32 @@ class CompteController
         exit;
     }
 
+  
+    public function updateTypeCompte()
+    {
+        // Vérification que la requête est bien en POST et que les données nécessaires sont présentes
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_compte'], $_POST['type_compte'])) {
+            // Récupérer l'ID du compte et le nouveau type
+            $idCompte = (int) $_POST['id_compte'];
+            $nouveauType = trim($_POST['type_compte']);
+    
+            // Trouver le compte via le repository
+            $compte = $this->compterepo->getCompte($idCompte);
+    
+            if ($compte) {
+                // Mettre à jour le type du compte
+                $compte->setTypeCompte($nouveauType);
+    
+                // Sauvegarder les changements dans la base de données
+                $this->compterepo->update($compte);  // Utilise `update()` pour modifier le compte
+            }
+        }
+    
+        // Rediriger après traitement
+        header('Location: ?action=compte-list');
+        exit;
+    }
+    
     //DELETE
     public function delete(int $id)
     {

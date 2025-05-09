@@ -17,7 +17,7 @@
         <input type="text" class="form-control" id="montant" name="montant" value="<?= htmlspecialchars($contrat->getMontant()) ?>" required />
     </div>
     <div class="mb-3">
-        <label for="duree" class="form-label"><?= htmlspecialchars('Durée :') ?></label>
+        <label for="duree" class="form-label"><?= htmlspecialchars('Durée (en mois) :') ?></label>
         <input type="number" class="form-control" id="duree" name="duree" value="<?= htmlspecialchars($contrat->getDuree()) ?>" required />
     </div>
 

@@ -41,12 +41,12 @@
 <form action="index.php?action=doLogin" method="POST">
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
-    <div class="form-group">
+    <div class="form-group mt-3">
         <label for="mail">Mail :</label>
          <input type="hidden" name="mail" value="demo@banque.com">
         <input class="form-control" type="email" id="mail" name="mail" required placeholder="Entrez votre email">
     </div>
-    <div class="form-group">
+    <div class="form-group mt-3">
         <label for="mdp">Mot de passe :</label>
          <input type="hidden" name="mdp" value="Mdpdemo1">
         <input class="form-control" type="password" id="mdp" name="mdp" required placeholder="Entrez votre mot de passe">

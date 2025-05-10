@@ -1,7 +1,7 @@
 <!-- HEADER -->
 <?php
 
-//MESSAGE DE DEBUT DE SESSION
+// MESSAGE DE DEBUT DE SESSION
 session_start();
 
 if (isset($_SESSION['flash_message'])) {
@@ -9,11 +9,17 @@ if (isset($_SESSION['flash_message'])) {
     unset($_SESSION['flash_message']);
 }
 
-//LIENS DE REDIRECTION VERS LES FICHIERS CONTROLLERS ET INSTANCIATION
+// Générer un CSRF token s'il n'existe pas encore
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));  // Génère un token unique pour la session
+}
+
+// LIENS DE REDIRECTION VERS LES FICHIERS CONTROLLERS ET INSTANCIATION
 require_once __DIR__ . '/Controllers/AuthController.php';
 require_once __DIR__ . '/Controllers/ClientController.php';
 require_once __DIR__ . '/Controllers/CompteController.php';
 require_once __DIR__ . '/Controllers/ContratController.php';
+
 
 $authController = new AuthController();
 $clientController = new ClientController();

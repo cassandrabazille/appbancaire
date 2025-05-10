@@ -51,7 +51,7 @@
          <input type="hidden" name="mdp" value="Mdpdemo1">
         <input class="form-control" type="password" id="mdp" name="mdp" required placeholder="Entrez votre mot de passe">
     </div>
-    <div class="form-group">
+    <div class="form-group mt-4">
         <button class="btn btn-primary" type="submit">Se connecter</button>
     </div>
 </form>

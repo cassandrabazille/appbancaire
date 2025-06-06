@@ -4,6 +4,7 @@
 // MESSAGE DE DEBUT DE SESSION
 session_start();
 
+
 if (isset($_SESSION['flash_message'])) {
     echo '<div class="alert alert-success">' . htmlspecialchars($_SESSION['flash_message']) . '</div>';
     unset($_SESSION['flash_message']);

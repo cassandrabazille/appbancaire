@@ -38,6 +38,7 @@ public function doLogin()
                 if ($mail === 'demo@banque.com' && $mdp === 'Mdpdemo1') {
                     $_SESSION['user'] = 'demo';
                     $_SESSION['modeDemo'] = true;
+                      $_SESSION['id_admin'] = 0; 
                     $_SESSION['flash_message'] = "Vous êtes connecté en mode démo.";
                     session_regenerate_id(true);  // Renouvelle l'ID de session pour la sécurité
                     header('Location: ?action=dashboard');

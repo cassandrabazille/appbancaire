@@ -2,6 +2,7 @@
 
 session_start();
 
+
 // Détection du mode démo via la session
 $modeDemo = isset($_SESSION['modeDemo']) && $_SESSION['modeDemo'] === true;
 
@@ -26,3 +27,4 @@ try {
 } catch (PDOException $e) {
     echo 'Erreur de connexion : ' . $e->getMessage();
 }
+
